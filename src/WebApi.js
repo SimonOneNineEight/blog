@@ -1,37 +1,34 @@
-import { getTokenFromLocalStorage } from "./utilis";
+import firebase from "firebase";
+import db from "./config.js";
 
 const BASE_URL = "https://student-json-api.lidemy.me";
 
 export const getAllPost = () => {
-  return fetch(`${BASE_URL}/posts?_sort=createdAt&_order=desc`).then((res) =>
-    res.json()
-  );
+  return db
+    .ref("/posts")
+    .once("value")
+    .then((snapShot) => snapShot.val());
 };
 
 export const getPostById = (id) => {
-  return fetch(`${BASE_URL}/posts/${id}`).then((res) => res.json());
+  console.log("Webapi");
+  return db
+    .ref(`/posts/${id}`)
+    .once("value")
+    .then((snapShot) => snapShot.val());
 };
 
-export const login = (username, password) => {
-  return fetch(`${BASE_URL}/login`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  }).then((res) => res.json());
+export const login = (email, password) => {
+  return firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 export const getMe = () => {
-  const token = getTokenFromLocalStorage();
-  return fetch(`${BASE_URL}/me`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  }).then((res) => res.json());
+  return firebase.auth().currentUser;
 };
 
 export const register = (username, password, nickname) => {
@@ -48,19 +45,18 @@ export const register = (username, password, nickname) => {
   }).then((res) => res.json());
 };
 
-export const newPost = (title, body) => {
-  const token = getTokenFromLocalStorage();
-  return fetch(`${BASE_URL}/posts`, {
-    method: "POST",
-    body: JSON.stringify({
+export const newPost = (title, content) => {
+  return db
+    .ref(`/posts`)
+    .push({
       title,
-      body,
-    }),
-    headers: {
-      "content-type": "application/json",
-      authorization: `${token}`,
-    },
-  }).then((res) => res.json());
+      content,
+      createdAt: Date.now(),
+    })
+    .then((res) => "success")
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const getLimitedPosts = (page, limit) => {

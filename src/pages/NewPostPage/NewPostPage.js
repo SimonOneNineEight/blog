@@ -85,11 +85,10 @@ const NewPostPage = () => {
   if (!user) return history.push("/");
   const handleNewPostSubmit = (e) => {
     e.preventDefault();
-    alert("submit");
     if (!title) return setErrorMessage("請輸入標題！");
     newPost(title, content).then((res) => {
       console.log(res);
-      history.push("/");
+      if (res === "success") return history.push("/");
     });
   };
   return (

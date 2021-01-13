@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { login, getMe } from "../../WebApi";
-import { setTokenToLocalStorage } from "../../utilis";
 import { AuthContext } from "../../contexts";
 
 const LoginWrapper = styled.div`

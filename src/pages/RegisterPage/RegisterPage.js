@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { getMe, register } from "../../WebApi";
-import { getTokenFromLocalStorage, setTokenToLocalStorage } from "../../utilis";
+import { setTokenToLocalStorage } from "../../utilis";
 import { AuthContext } from "../../contexts";
 
 const RegisterWrapper = styled.div`

@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectPosts } from "../../redux/reducers/postReducer";
 
 const NavbarWrapper = styled.div`
-  width: 108px;
+  width: 200px;
   position: fixed;
   left: 0;
   top: 72px;
@@ -19,10 +21,16 @@ const Nav = styled(Link)`
   text-decoration: none;
 `;
 const Navbar = () => {
+  const posts = useSelector(selectPosts);
   return (
     <NavbarWrapper>
       <NavList>
-        <Nav to="#">我是還沒做好的分類功能</Nav>
+        {posts &&
+          posts.map((post, index) => (
+            <Nav key={index} to={`/posts/${post.id}`}>
+              {post.title}
+            </Nav>
+          ))}
       </NavList>
     </NavbarWrapper>
   );

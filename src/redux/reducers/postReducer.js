@@ -5,7 +5,7 @@ export const postReducer = createSlice({
   name: "posts",
   initialState: {
     isLoading: false,
-    post: [],
+    post: null,
   },
   reducers: {
     setIsLoading: (state, action) => {
@@ -32,10 +32,23 @@ export const getPost = (id) => (dispatch) => {
 };
 export const getAllPost = () => (dispatch) => {
   dispatch(setIsLoading(true));
-  getAllPostFromApi().then((post) => {
-    dispatch(setPost(post));
+  getAllPostFromApi().then((posts) => {
+    const postArr = [];
+    Object.keys(posts).forEach((post) => {
+      postArr.push({
+        id: post,
+        title: posts[post].title,
+        content: posts[post].content,
+        createdAt: posts[post].createdAt,
+      });
+    });
+    dispatch(setPost(postArr));
     dispatch(setIsLoading(false));
   });
+  /* getAllPostFromApi().then((post) => {
+    dispatch(setPost(post));
+    dispatch(setIsLoading(false));
+  });*/
 };
 
 // The function below is called a selector and allows us to select a value from

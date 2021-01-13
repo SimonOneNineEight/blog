@@ -30,12 +30,17 @@ export default function PostPage() {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
-  const date = new Date(post.createdAt);
   return (
-    <PostWrapper>
-      <PostTitle>{post.title}</PostTitle>
-      <PostCreatedAt>{date.toLocaleDateString()}</PostCreatedAt>
-      <PostContent source={post.body} />
-    </PostWrapper>
+    <>
+      {post && (
+        <PostWrapper>
+          <PostTitle>{post.title}</PostTitle>
+          <PostCreatedAt>
+            {new Date(post.createdAt).toLocaleDateString()}
+          </PostCreatedAt>
+          <PostContent source={post.content} />
+        </PostWrapper>
+      )}
+    </>
   );
 }

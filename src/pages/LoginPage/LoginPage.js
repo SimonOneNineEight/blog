@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { login, getMe } from "../../WebApi";
-import { setTokenToLocalStorage } from "../../utilis";
 import { AuthContext } from "../../contexts";
 
 const LoginWrapper = styled.div`
@@ -96,22 +96,18 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
   const { setUser } = useContext(AuthContext);
   const handleLoginSubmit = (e) => {
     setErrorMessage("");
     e.preventDefault();
     login(username, password).then((res) => {
-      if (res.ok === 0) return setErrorMessage(res.message);
-      setTokenToLocalStorage(res.token);
-      getMe().then((user) => {
-        if (user.ok !== 1) {
-          setTokenToLocalStorage(null);
-          setErrorMessage(res.message);
-          return;
-        }
-        setUser(user.data);
-        window.history.back(-1);
-      });
+      if (!res.user) return setErrorMessage("fail to login");
+      const user = getMe();
+      if (user) {
+        setUser(user);
+        return history.push("/");
+      }
     });
   };
   return (

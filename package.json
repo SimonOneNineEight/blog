@@ -20,7 +20,6 @@
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
-  "homepage": "https://simononenineeight.github.io/blog/",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

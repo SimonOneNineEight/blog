@@ -18,12 +18,15 @@ const BoxTitle = styled.div`
 
 const NewPostDetail = styled.div`
   width: 50vw;
-  min-height: 100vh;
+  height: 100%;
+  min-height: 200vh;
+  border: 0;
   background-color: #272727;
   color: #e0e0e0;
 `;
 const NewPostInputWrapper = styled.div`
   padding: 15px 0;
+  height: 100%;
 `;
 const NewPostTitle = styled.input`
   width: 100%;
@@ -36,7 +39,7 @@ const NewPostTitle = styled.input`
 `;
 const NewPostContent = styled.textarea`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   color: #e0e0e0;
   background-color: #272727;
   box-sizing: border-box;

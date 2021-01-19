@@ -32,7 +32,10 @@ const PostCreatedAt = styled.div`
   font-size: 12px;
   font-style: italic;
 `;
-const PostTitle = styled.div`
+const PostTitle = styled(Link)`
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
   font-size: 32px;
   font-weight: bold;
   padding-bottom: 12px;
@@ -73,16 +76,13 @@ export default function HomePage() {
       <Navbar />
       <PostListWrapper>
         <PostList>
-          {postOnPage.map((post, index) => (
-            <Post key={index}>
+          {postOnPage.map((post) => (
+            <Post key={post.id}>
               <PostCreatedAt>
                 {new Date(post.createdAt).toLocaleDateString()}
               </PostCreatedAt>
-              <PostTitle>{post.title}</PostTitle>
+              <PostTitle to={`/posts/${post.id}`}>{post.title}</PostTitle>
               <PostContent source={post.content} />
-              {post.content.length > 100 && (
-                <ReadMore to={`posts/${post.id}`}>Read More</ReadMore>
-              )}
             </Post>
           ))}
         </PostList>

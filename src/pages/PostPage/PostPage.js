@@ -30,6 +30,7 @@ export default function PostPage() {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
+  console.log(post);
   return (
     <>
       {post && (

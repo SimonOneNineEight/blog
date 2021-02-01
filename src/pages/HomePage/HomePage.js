@@ -45,12 +45,6 @@ const PostContent = styled(Markdown)`
   max-height: 100px;
   overflow: hidden;
 `;
-const ReadMore = styled(Link)`
-  font-size: 14px;
-  font-weight: bold;
-  padding-top: 12px;
-  cursor: pointer;
-`;
 
 export default function HomePage() {
   const dispatch = useDispatch();

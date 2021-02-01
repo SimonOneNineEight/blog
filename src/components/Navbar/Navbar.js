@@ -19,6 +19,10 @@ const Nav = styled(Link)`
   color: #6c6c6c;
   cursor: pointer;
   text-decoration: none;
+  display: block;
+  & + & {
+    padding-top: 12px;
+  }
 `;
 const Navbar = () => {
   const posts = useSelector(selectPosts);

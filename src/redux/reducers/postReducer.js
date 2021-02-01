@@ -39,7 +39,7 @@ export const getAllPost = () => (dispatch) => {
   getAllPostFromApi().then((posts) => {
     const postArr = [];
     Object.keys(posts).forEach((post) => {
-      postArr.push({
+      postArr.unshift({
         id: post,
         title: posts[post].title,
         content: posts[post].content,

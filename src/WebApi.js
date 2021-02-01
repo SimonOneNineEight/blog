@@ -11,7 +11,6 @@ export const getAllPost = () => {
 };
 
 export const getPostById = (id) => {
-  console.log("Webapi");
   return db
     .ref(`/posts/${id}`)
     .once("value")

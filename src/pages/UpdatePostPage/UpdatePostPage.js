@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../../contexts";
 import { newPost } from "../../WebApi";
 import Markdown from "../../components/common/markdown";
@@ -76,10 +76,11 @@ const PreviewTitle = styled.div`
   font-size: 32px;
   font-weight: bold;
 `;
-const NewPostPage = () => {
+export default function UpdatePostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { id } = useParams();
   const history = useHistory();
   const { user } = useContext(AuthContext);
   if (!user) return history.push("/");
@@ -128,6 +129,4 @@ const NewPostPage = () => {
       </NewPostBox>
     </NewPostWrapper>
   );
-};
-
-export default NewPostPage;
+}

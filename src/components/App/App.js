@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "../Header";
 import LoginPage from "../../pages/LoginPage";
 import HomePage from "../../pages/HomePage";
@@ -43,12 +43,8 @@ function App() {
   const isLoading = useSelector(selectIsLoading);
   const [user, setUser] = useState(null);
   useEffect(() => {
-    getMe().then((res) => {
-      if (res.ok) {
-        setUser(res.data);
-      }
-    }, []);
-  });
+    setUser(getMe());
+  }, []);
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <PageWrapper>

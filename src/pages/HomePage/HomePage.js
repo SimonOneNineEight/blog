@@ -11,11 +11,14 @@ import {
   setIsLoading,
 } from "../../redux/reducers/postReducer";
 
-const PostListWrapper = styled.div`
+const HomePageWrapper = styled.div`
   width: 680px;
   padding: 20px 20px 20px 108px;
 `;
-const PostList = styled.div``;
+const PostListWrapper = styled.div``;
+const PostList = styled.div`
+  min-height: 75vh;
+`;
 const Post = styled.div`
   width: 100%;
   padding-bottom: 32px;
@@ -29,24 +32,18 @@ const PostCreatedAt = styled.div`
   font-size: 12px;
   font-style: italic;
 `;
-const PostTitle = styled.div`
-  color: #5b5b5b;
-  font-size: 24px;
+const PostTitle = styled(Link)`
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+  font-size: 32px;
   font-weight: bold;
   padding-bottom: 12px;
 `;
 const PostContent = styled(Markdown)`
-  color: #5b5b5b;
   font-size: 14px;
   max-height: 100px;
   overflow: hidden;
-`;
-const ReadMore = styled(Link)`
-  color: #5b5b5b;
-  font-size: 14px;
-  font-weight: bold;
-  padding-top: 12px;
-  cursor: pointer;
 `;
 
 export default function HomePage() {
@@ -60,28 +57,29 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(getAllPost());
-    setPostOnPage(posts.slice(0, pageSize));
-    setTotalPage(Math.ceil(posts.length / pageSize));
-    setPagination(Array.from({ length: totalPage }).map((_, i) => i + 1));
-    dispatch(setIsLoading(false));
+    if (posts) {
+      setPostOnPage(posts.slice(0, pageSize));
+      setTotalPage(Math.ceil(posts.length / pageSize));
+      setPagination(Array.from({ length: totalPage }).map((_, i) => i + 1));
+      dispatch(setIsLoading(false));
+    }
   }, [totalPage, dispatch, posts]);
 
   return (
-    <PostListWrapper>
+    <HomePageWrapper>
       <Navbar />
-      <PostList>
-        {postOnPage.map((post) => (
-          <Post key={post.id}>
-            <PostCreatedAt>
-              {new Date(post.createdAt).toLocaleDateString()}
-            </PostCreatedAt>
-            <PostTitle>{post.title}</PostTitle>
-            <PostContent source={post.body} />
-            {post.body.length > 100 && (
-              <ReadMore to={`posts/${post.id}`}>Read More</ReadMore>
-            )}
-          </Post>
-        ))}
+      <PostListWrapper>
+        <PostList>
+          {postOnPage.map((post) => (
+            <Post key={post.id}>
+              <PostCreatedAt>
+                {new Date(post.createdAt).toLocaleDateString()}
+              </PostCreatedAt>
+              <PostTitle to={`/posts/${post.id}`}>{post.title}</PostTitle>
+              <PostContent source={post.content} />
+            </Post>
+          ))}
+        </PostList>
         <Pagination
           totalPage={totalPage}
           defaultCurrentPage={defaultCurrentPage}
@@ -94,7 +92,7 @@ export default function HomePage() {
             setPostOnPage(newPostOnPage);
           }}
         />
-      </PostList>
-    </PostListWrapper>
+      </PostListWrapper>
+    </HomePageWrapper>
   );
 }

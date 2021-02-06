@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Markdown from "../../components/common/markdown";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, selectPosts } from "../../redux/reducers/postReducer";
+import { getPost, selectPostOnPage } from "../../redux/reducers/postReducer";
 
 const PostWrapper = styled.div`
   padding: 24px 200px;
@@ -25,17 +25,23 @@ const PostContent = styled(Markdown)`
 `;
 export default function PostPage() {
   const dispatch = useDispatch();
-  const post = useSelector(selectPosts);
+  const post = useSelector(selectPostOnPage);
   const { id } = useParams();
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
-  const date = new Date(post.createdAt);
+  console.log(post);
   return (
-    <PostWrapper>
-      <PostTitle>{post.title}</PostTitle>
-      <PostCreatedAt>{date.toLocaleDateString()}</PostCreatedAt>
-      <PostContent source={post.body} />
-    </PostWrapper>
+    <>
+      {post && (
+        <PostWrapper>
+          <PostTitle>{post.title}</PostTitle>
+          <PostCreatedAt>
+            {new Date(post.createdAt).toLocaleDateString()}
+          </PostCreatedAt>
+          <PostContent source={post.content} />
+        </PostWrapper>
+      )}
+    </>
   );
 }

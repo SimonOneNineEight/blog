@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Markdown from "../../components/common/markdown";
+import Markdown from "../../components/common/Markdown";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import Pagination from "../../components/Pagination";

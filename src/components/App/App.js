@@ -8,6 +8,7 @@ import AboutPage from "../../pages/AboutPage";
 import PostPage from "../../pages/PostPage";
 import NewPostPage from "../../pages/NewPostPage";
 import RegisterPage from "../../pages/RegisterPage";
+import UpdatePostPage from "../../pages/UpdatePostPage";
 import { AuthContext } from "../../contexts";
 import { getMe } from "../../WebApi";
 import { useSelector } from "react-redux";
@@ -69,6 +70,9 @@ function App() {
               </Route>
               <Route path="/new-post">
                 <NewPostPage />
+              </Route>
+              <Route path="/update-post/:id">
+                <UpdatePostPage />
               </Route>
             </Switch>
           </BodyWrapper>

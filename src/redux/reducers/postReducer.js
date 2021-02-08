@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getPostById, getAllPost as getAllPostFromApi } from "../../WebApi";
+import {
+  getPostById,
+  getAllPostApi,
+  newPostApi,
+  updatePostById,
+} from "../../WebApi";
 
 export const postReducer = createSlice({
   name: "posts",
@@ -36,7 +41,7 @@ export const getPost = (id) => (dispatch) => {
 };
 export const getAllPost = () => (dispatch) => {
   dispatch(setIsLoading(true));
-  getAllPostFromApi().then((posts) => {
+  getAllPostApi().then((posts) => {
     const postArr = [];
     Object.keys(posts).forEach((post) => {
       postArr.unshift({
@@ -50,7 +55,18 @@ export const getAllPost = () => (dispatch) => {
     dispatch(setIsLoading(false));
   });
 };
-
+export const newPost = (title, content) => (dispatch) => {
+  dispatch(setIsLoading(true));
+  newPostApi(title, content).then((res) => {
+    if (res === "success") return dispatch(setIsLoading(false));
+  });
+};
+export const updatePost = (id, title, content) => (dispatch) => {
+  dispatch(setIsLoading(true));
+  updatePostById(id, title, content).then((res) => {
+    if (res === "success") return dispatch(setIsLoading(false));
+  });
+};
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`

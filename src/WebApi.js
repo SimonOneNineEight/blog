@@ -3,7 +3,7 @@ import db from "./config.js";
 
 const BASE_URL = "https://student-json-api.lidemy.me";
 
-export const getAllPost = () => {
+export const getAllPostApi = () => {
   return db
     .ref("/posts")
     .once("value")
@@ -44,13 +44,14 @@ export const register = (username, password, nickname) => {
   }).then((res) => res.json());
 };
 
-export const newPost = (title, content) => {
+export const newPostApi = (title, content) => {
   return db
     .ref(`/posts`)
     .push({
       title,
       content,
       createdAt: Date.now(),
+      updatedAt: Date.now(),
     })
     .then((res) => "success")
     .catch((error) => {
@@ -58,6 +59,15 @@ export const newPost = (title, content) => {
     });
 };
 
+export const updatePostById = (id, title, content) => {
+  return db
+    .ref(`/posts/${id}`)
+    .update({ title, content, updatedAt: Date.now() })
+    .then((res) => "success")
+    .catch((error) => {
+      console.log(error);
+    });
+};
 export const getLimitedPosts = (page, limit) => {
   return fetch(
     `${BASE_URL}/posts?_page=${page}&_limit=${limit}&_sort=createdAt&_order=desc`

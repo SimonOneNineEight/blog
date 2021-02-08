@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts";
-import { newPost } from "../../WebApi";
-import Markdown from "../../components/common/markdown";
+import { useDispatch, useSelector } from "react-redux";
+import { newPost } from "../../redux/reducers/postReducer";
+import Markdown from "../../components/common/Markdown";
+import Textarea from "../../components/common/Textarea";
 
 const NewPostWrapper = styled.div``;
 const NewPostBox = styled.form`
@@ -36,15 +38,6 @@ const NewPostTitle = styled.input`
   font-size: 32px;
   height: 40px;
   padding: 0 10px;
-`;
-const NewPostContent = styled.textarea`
-  width: 100%;
-  min-height: 100vh;
-  color: #e0e0e0;
-  background-color: #272727;
-  box-sizing: border-box;
-  font-size: 18px;
-  padding: 10px 10px 0;
 `;
 const NewPostSubmit = styled.input`
   position: absolute;
@@ -83,16 +76,15 @@ const NewPostPage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useContext(AuthContext);
   if (!user) return history.push("/");
   const handleNewPostSubmit = (e) => {
     e.preventDefault();
     if (!title) return setErrorMessage("請輸入標題！");
-    newPost(title, content).then((res) => {
-      console.log(res);
-      if (res === "success") return history.push("/");
-    });
+    dispatch(newPost(title, content));
+    history.push("/");
   };
   return (
     <NewPostWrapper>
@@ -106,10 +98,10 @@ const NewPostPage = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <NewPostContent
+            <Textarea
               placeholder="請輸入文章內容"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              content={content}
+              setContent={setContent}
             />
           </NewPostInputWrapper>
           {errorMessage ? (

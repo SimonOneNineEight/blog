@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { newPost } from "../../redux/reducers/postReducer";
 import Markdown from "../../components/common/Markdown";
 import Textarea from "../../components/common/Textarea";

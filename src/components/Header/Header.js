@@ -99,7 +99,7 @@ const Header = () => {
         </FunctionWrapper>
       </HeaderFunctionWrapper>
       <LoginWrapper>
-        {!user && <Login to="/register">註冊</Login>}
+        {/* {!user && <Login to="/register">註冊</Login>} */}
         {!user && <Login to="/login">登入</Login>}
         {user && <Logout onClick={handleLogout}>登出</Logout>}
       </LoginWrapper>

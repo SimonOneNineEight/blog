@@ -7,7 +7,7 @@ const AboutMeWrapper = styled.div`
 `;
 const AboutMeBox = styled.div`
   display: flex;
-  width: 600px;
+  width: 800px;
   height: 233px;
 `;
 const AboutMeContentWrapper = styled.div`
@@ -26,12 +26,13 @@ const AboutMeContent = styled.div`
   color: #5b5b5b;
   font-size: 16px;
 `;
-const AboutMeAvatar = styled.div`
-  width: 200px;
-  height: 200px;
-  background-color: black;
+const AboutMeAvatar = styled.img`
+  width: 500px;
+  height: 400px;
   padding: 16px;
+  object-fit: contain;
 `;
+
 export default function AboutPage() {
   const [about, setAbout] = useState(null);
   useEffect(() => {
@@ -48,7 +49,7 @@ export default function AboutPage() {
             <AboutMeTitle>{about.name}</AboutMeTitle>
             <AboutMeContent>{about.content}</AboutMeContent>
           </AboutMeContentWrapper>
-          <AboutMeAvatar />
+          <AboutMeAvatar src={about.avatar} />
         </AboutMeBox>
       )}
     </AboutMeWrapper>

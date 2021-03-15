@@ -24,7 +24,7 @@ const Post = styled.div`
   padding-bottom: 32px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   & + & {
-    padding-top: 24px;
+    padding: 64px 0;
   }
 `;
 const PostCreatedAt = styled.div`
